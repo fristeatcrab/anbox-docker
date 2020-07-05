@@ -1,5 +1,6 @@
 #!/bin/bash
 export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-"$HOME/.local/share"}"
 export XAUTHORITY="${XAUTHORITY:-"$HOME/.Xauthority"}"
 podman run --rm -it \
     --name anbox-container-manager --replace \
