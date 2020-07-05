@@ -9,8 +9,6 @@ podman run --rm -dit \
     --env ANBOX_LOG_LEVEL=debug \
     msizanoen/anbox:1 \
     /anbox-container-manager \
-    --container-network-dns-servers=1.1.1.1 \
     --android-image=/var/lib/anbox/android.img \
     --data-path=/var/lib/anbox/data \
-    --privileged \
     "$@"
