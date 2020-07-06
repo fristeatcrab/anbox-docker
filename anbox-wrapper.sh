@@ -2,13 +2,13 @@
 export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-"$HOME/.local/share"}"
 export XAUTHORITY="${XAUTHORITY:-"$HOME/.Xauthority"}"
-if [ "$1" == "--delete" ] ; then
-    podman rm -f anbox-session-manager
-    exit
-fi
-if ! (podman ps -a --format "{{.Names}}" | grep '^anbox-session-manager$') ; then
-    podman run --rm -dit \
-        --name anbox-session-manager \
+check_exist() {
+    podman ps --format "{{.Names}}" | grep "^$cname$"
+}
+cname=anbox-session-manager
+if ! check_exist ; then
+    podman run -dit \
+        --name $cname --replace \
         -v /dev/null:/dev/ashmem \
         -v /dev/null:/dev/binder \
         -v /dev/dri:/dev/dri \
@@ -23,7 +23,16 @@ if ! (podman ps -a --format "{{.Names}}" | grep '^anbox-session-manager$') ; the
         --env-host \
         $ANBOX_PODMAN_FLAGS \
         msizanoen/anbox:1 \
-        sleep '+Inf'
+        anbox session-manager \
+        $ANBOX_SESSION_FLAGS > /dev/null
 fi
-podman exec -it anbox-session-manager \
-    anbox "$@"
+until podman exec -it $cname anbox wait-ready ; do
+    if check_exist ; then
+        sleep 0.1
+    else
+        podman logs $cname
+        podman rm $cname > /dev/null
+        exit 1
+    fi
+done
+exec podman exec -it $cname anbox "$@"
