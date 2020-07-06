@@ -1,0 +1,9 @@
+[Unit]
+Description=Anbox Container Manager
+
+[Service]
+ExecStart=/usr/local/bin/anbox-container-manager.sh
+ExecStop=/usr/bin/podman stop anbox-container-manager
+
+[Install]
+WantedBy=graphical.target
