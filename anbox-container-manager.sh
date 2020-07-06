@@ -11,7 +11,7 @@ $container_engine run --rm -it \
     -v /dev:/dev \
     -v /run:/run \
     -v /var/lib/anbox:/var/lib/anbox \
-    msizanoen/anbox:2 \
+    msizanoen/anbox:3 \
     /anbox-container-manager \
     --daemon \
     --android-image=/var/lib/anbox/android.img \

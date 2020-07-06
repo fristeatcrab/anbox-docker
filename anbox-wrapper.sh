@@ -23,7 +23,7 @@ if ! check_exist ; then
         --ipc=host \
         --env-host \
         $ANBOX_PODMAN_FLAGS \
-        msizanoen/anbox:2 \
+        msizanoen/anbox:3 \
         anbox session-manager \
         $ANBOX_SESSION_FLAGS > /dev/null
 fi

@@ -1,0 +1,11 @@
+[Unit]
+Description=Anbox Network Interface
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/anbox-bridge.sh start
+ExecStop=/usr/local/bin/anbox-bridge.sh stop
+
+[Install]
+WantedBy=graphical.target
