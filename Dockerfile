@@ -38,10 +38,12 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && \
-    apt-get install -y python2 ninja-build libgmock-dev ca-certificates
+    apt-get install -y python2 ninja-build libgmock-dev ca-certificates patch
 
 RUN git clone --recurse-submodules --progress https://github.com/anbox/anbox /anbox
 WORKDIR /anbox
+COPY anbox.patch /tmp/anbox.patch
+RUN patch -p1 < /tmp/anbox.patch
 RUN cmake -B build \
         -DCMAKE_BUILD_TYPE=Release \
         -DBINDERFS_PATH=/var/lib/binderfs \

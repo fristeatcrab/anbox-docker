@@ -2,6 +2,7 @@
 export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-"$HOME/.local/share"}"
 export XAUTHORITY="${XAUTHORITY:-"$HOME/.Xauthority"}"
+export ANBOX_DOCKER_LAUNCHER="$(realpath "$0")"
 check_exist() {
     podman ps --format "{{.Names}}" | grep "^$cname$"
 }
@@ -22,7 +23,7 @@ if ! check_exist ; then
         --ipc=host \
         --env-host \
         $ANBOX_PODMAN_FLAGS \
-        msizanoen/anbox:1 \
+        msizanoen/anbox:2 \
         anbox session-manager \
         $ANBOX_SESSION_FLAGS > /dev/null
 fi

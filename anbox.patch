@@ -1,0 +1,14 @@
+diff --git a/src/anbox/application/launcher_storage.cpp b/src/anbox/application/launcher_storage.cpp
+index 5bdf931..cc6c694 100644
+--- a/src/anbox/application/launcher_storage.cpp
++++ b/src/anbox/application/launcher_storage.cpp
+@@ -73,6 +73,9 @@ void LauncherStorage::add_or_update(const Database::Item &item) {
+   auto exe_path = utils::process_get_exe_path(getpid());
+   if (utils::get_env_value("SNAP").length() > 0)
+     exe_path = snap_exe_path;
++  auto docker_launcher = utils::get_env_value("ANBOX_DOCKER_LAUNCHER");
++  if (docker_launcher.length() > 0)
++    exe_path = docker_launcher;
+ 
+   std::string exec = utils::string_format("%s launch ", exe_path);
+ 
