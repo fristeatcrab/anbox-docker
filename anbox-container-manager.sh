@@ -13,6 +13,7 @@ $container_engine run --rm -it \
     -v /var/lib/anbox:/var/lib/anbox \
     msizanoen/anbox:2 \
     /anbox-container-manager \
+    --daemon \
     --android-image=/var/lib/anbox/android.img \
     --data-path=/var/lib/anbox/data \
     "$@"
