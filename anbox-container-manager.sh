@@ -1,5 +1,10 @@
 #!/bin/bash
-podman run --rm -it \
+if ! [ -z "$ANBOX_USE_DOCKER" ] ; then
+    container_engine=docker
+else
+    container_engine=podman
+fi
+$container_engine run --rm -it \
     --name anbox-container-manager \
     --privileged \
     --net=host \
